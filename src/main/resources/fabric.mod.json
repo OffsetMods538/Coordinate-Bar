@@ -1,37 +1,37 @@
 {
 	"schemaVersion": 1,
-	"id": "coordinate-bar",
+	"id": "position-bar",
 	"version": "${modVersion}",
-	"name": "Coordinate Bar",
+	"name": "Position Bar",
 	"description": "A simple server-side mod that lets players see their coordinates without the confusing F3 menu.",
 	"authors": [
 		"OffsetMonkey538"
 	],
 	"contact": {
-		"sources": "https://github.com/OffsetMods538/Coordinate-Bar"
+		"sources": "https://github.com/OffsetMods538/Position-Bar"
 	},
 	"license": "MIT",
-	"icon": "assets/coordinate-bar/icon.png",
+	"icon": "assets/position-bar/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"top.offsetmonkey538.coordinatebar.CoordinateBar"
+			"top.offsetmonkey538.positionbar.PositionBar"
 		],
 		"client": [
-			"top.offsetmonkey538.coordinatebar.CoordinateBarClient"
+            "top.offsetmonkey538.positionbar.PositionBarClient"
 		],
 		"preLaunch": [
 			"com.llamalad7.mixinextras.MixinExtrasBootstrap::init"
 		]
 	},
 	"mixins": [
-		"coordinate-bar.mixins.json",
+		"position-bar.mixins.json",
 		{
 			"config": "coordinate-bar.client.mixins.json",
 			"environment": "client"
 		}
 	],
-	"accessWidener": "coordinate-bar.accesswidener",
+	"accessWidener": "position-bar.accesswidener",
 	"depends": {
 		"fabric-api": "*",
 		"minecraft": "${supportedMinecraftVersions}"

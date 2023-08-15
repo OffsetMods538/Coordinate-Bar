@@ -59,7 +59,7 @@ loom {
 		}
 	}
 
-	accessWidenerPath = file("src/main/resources/coordinate-bar.accesswidener")
+	accessWidenerPath = file("src/main/resources/position-bar.accesswidener")
 }
 
 processResources {
@@ -92,7 +92,7 @@ jar {
 
 modrinth {
 	token = System.getenv("MODRINTH_TOKEN")
-	projectId = "coordinate-bar"
+	projectId = "position-bar"
 	def customVersionName = System.getenv("VERSION_NAME")
 	if (customVersionName != null) versionName = customVersionName
 	versionNumber = "${project.version}"

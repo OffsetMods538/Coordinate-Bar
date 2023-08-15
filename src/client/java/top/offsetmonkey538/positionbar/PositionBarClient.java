@@ -1,8 +1,8 @@
-package top.offsetmonkey538.coordinatebar;
+package top.offsetmonkey538.positionbar;
 
 import net.fabricmc.api.ClientModInitializer;
 
-public class CoordinateBarClient implements ClientModInitializer {
+public class PositionBarClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
