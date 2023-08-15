@@ -1,12 +1,10 @@
 package top.offsetmonkey538.coordinatebar;
 
-import java.util.HashMap;
-import java.util.Map;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.entity.boss.BossBarManager;
 import net.minecraft.entity.boss.CommandBossBar;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -19,7 +17,7 @@ public class CoordinateBar implements ModInitializer {
 	public static final String MOD_ID = "coordinate-bar";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-	private static final Map<ServerPlayerEntity, CommandBossBar> POSITION_BAR_MAP = new HashMap<>();
+	public static final Identifier POSITION_BAR = id("position_bar");
 
 	@Override
 	public void onInitialize() {
@@ -28,25 +26,37 @@ public class CoordinateBar implements ModInitializer {
 		CommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess, environment) -> CoordinateBarCommand.register(dispatcher)));
 	}
 
-	public static void addPositionBar(ServerPlayerEntity player, BossBarManager bossBarManager) {
-		CommandBossBar positionBar = bossBarManager.add(id("position_bar"), Text.empty());
-		positionBar.addPlayer(player.getUuid());
+	public static Identifier positionBarId(ServerPlayerEntity player) {
+		return POSITION_BAR.withSuffixedPath("_" + player.getUuidAsString());
+	}
 
-		POSITION_BAR_MAP.put(player, positionBar);
+	public static void addPositionBar(ServerPlayerEntity player) {
+		final MinecraftServer server = player.getServer();
+		if (server == null) return;
+		final BossBarManager manager = server.getBossBarManager();
+
+		CommandBossBar positionBar = manager.add(positionBarId(player), Text.empty());
+		positionBar.addPlayer(player);
+		positionBar.setVisible(true);
 	}
 
 	public static void removePositionBar(ServerPlayerEntity player) {
-		POSITION_BAR_MAP.remove(player);
-	}
+		final MinecraftServer server = player.getServer();
+		if (server == null) return;
+		final BossBarManager manager = server.getBossBarManager();
 
-	public static CommandBossBar getPositionBar(ServerPlayerEntity player) {
-		return POSITION_BAR_MAP.get(player);
+		manager.remove(manager.get(positionBarId(player)));
 	}
 
 	public static void updatePositionBar(ServerPlayerEntity player, BlockPos pos) {
-		if (!POSITION_BAR_MAP.containsKey(player)) return;
+		final MinecraftServer server = player.getServer();
+		if (server == null) return;
+		final BossBarManager manager = server.getBossBarManager();
 
-		getPositionBar(player).setName(Text.of(String.format("X: %s Y: %s Z: %s", pos.getX(), pos.getY(), pos.getZ())));
+		CommandBossBar positionBar = manager.get(positionBarId(player));
+		if (positionBar == null) return;
+
+		positionBar.setName(Text.of(String.format("X: %s Y: %s Z: %s", pos.getX(), pos.getY(), pos.getZ())));
 	}
 
 	public static Identifier id(String path) {

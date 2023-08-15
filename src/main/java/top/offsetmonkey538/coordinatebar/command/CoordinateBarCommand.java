@@ -3,7 +3,6 @@ package top.offsetmonkey538.coordinatebar.command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.entity.boss.BossBarManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
@@ -23,11 +22,9 @@ public class CoordinateBarCommand {
 
     private static int enableCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         final ServerPlayerEntity player = context.getSource().getPlayerOrThrow();
-        if (player.getServer() == null) return 0;
-        final BossBarManager bossBarManager = player.getServer().getBossBarManager();
         final BlockPos pos = player.getBlockPos();
 
-        CoordinateBar.addPositionBar(player, bossBarManager);
+        CoordinateBar.addPositionBar(player);
         CoordinateBar.updatePositionBar(player, pos);
 
         return 1;

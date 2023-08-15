@@ -19,6 +19,6 @@ public abstract class ServerPlayerEntityMixin {
     private void updateCoordinateBar(BlockPos pos, CallbackInfo ci) {
         final ServerPlayerEntity player = (ServerPlayerEntity) (Object) this;
 
-        updatePositionBar(player, player.getBlockPos());
+        updatePositionBar(player, pos);
     }
 }
