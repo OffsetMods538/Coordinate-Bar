@@ -44,6 +44,8 @@ public class CoordinateBar implements ModInitializer {
 	}
 
 	public static void updatePositionBar(ServerPlayerEntity player, BlockPos pos) {
+		if (!POSITION_BAR_MAP.containsKey(player)) return;
+
 		getPositionBar(player).setName(Text.of(String.format("X: %s Y: %s Z: %s", pos.getX(), pos.getY(), pos.getZ())));
 	}
 
