@@ -41,6 +41,10 @@ dependencies {
 	mappings "net.fabricmc:yarn:${outlet.yarnVersion(project.minecraft_version)}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${outlet.loaderVersion()}"
 
+	// Fabric API
+	// TODO: modImplementation "net.fabricmc.fabric-api:fabric-api:${outlet.fapiVersion(project.minecraft_version)}"
+	modImplementation "net.fabricmc.fabric-api:fabric-api:0.87.0+1.20.1"
+
 	// Mixin Extras
 	includeImplementation annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:${project.mixinextras_version}")
 }
@@ -104,5 +108,6 @@ modrinth {
 	}
 
 	dependencies {
+		required.project "fabric-api"
 	}
 }

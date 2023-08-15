@@ -33,6 +33,7 @@
 	],
 	"accessWidener": "coordinate-bar.accesswidener",
 	"depends": {
+		"fabric-api": "*",
 		"minecraft": "${supportedMinecraftVersions}"
 	}
 }
